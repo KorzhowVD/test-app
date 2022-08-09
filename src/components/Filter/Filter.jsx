@@ -1,60 +1,53 @@
-import React from 'react'
+import React, { useState, useEffect }  from 'react'
 import '../Filter/Filter.css'
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import { useState } from 'react';
+import { isAllTransferFilters } from './utils';
+import {defaultTransferFilters, emptyTransferFilters} from './constants';
 
-function Filter({setCurrensy, tickets}) {
-	const [update, setUpdate] = useState([tickets])
-	const [activeButton, setActiveButton] = useState('')
-	const [defaultCheck, setDefaultCheck] = useState({
-		checkboxAll:true,
-		checkbox0:false,
-		checkbox1:false,
-		checkbox2:false,
-		checkbox3:false,
-	})
+
+function Filter({currency, setCurrensy, transferFilter, setTransferFilter}) {
+
+	//состояние для отображения чекбокса "Все"
+const [isAllChecked, setIsAllChecked] = useState(true)
+
+useEffect (() => {
+	if (isAllTransferFilters(transferFilter)) {
+		setIsAllChecked(true)
+	} else {
+		setIsAllChecked(false)
+	}
+}, [transferFilter])
+
 
 	const checkedFilterAll = (e) => {
-		const checked = e.target.checked;
-
-		if (checked) {
-			setDefaultCheck({
-        checkboxAll: true		
-      })
+		if (isAllChecked) {
+			setTransferFilter(emptyTransferFilters)
 		} else {
-			setDefaultCheck({
-        checkboxAll: false,	
-      })
+			setTransferFilter(defaultTransferFilters)
 		}
-	}	
+	}
 
 	const checkedFilter = (e) => {
-		const value = e.target.value;
-    const checked = e.target.checked;
-    const name = e.target.name;
-		const data = tickets;
-
-		setDefaultCheck({[name] : checked})
-		if (checked){
-			const filterData = data.filter(item => item.stops === +value);
-      filterData.forEach(item => update.push(item));
-      setUpdate({
-        update: update
-      });
-		}else {
-			const filterData = data.filter(item => item.stops !== +value);
-      setUpdate({
-        update: filterData
-      });
+		const value = e.target.value
+		if (transferFilter[value]) {
+			setTransferFilter((prev) => ({
+				...prev,
+				[value]: false
+			}))
+		} else {
+			setTransferFilter((prev) => ({
+				...prev,
+				[value]: true
+			}))
 		}
 	}
 
 	
 	const changeHandler = (event) => {
-		setActiveButton(event.target.id);
+		setCurrensy(event.target.id);
 		switch (event.target.id) {
 			case 'rub':
 				return setCurrensy('rub')
@@ -72,9 +65,9 @@ function Filter({setCurrensy, tickets}) {
 			<div className='filter_currencies'>
 				<h3>ВАЛЮТА</h3>
 				<div className='currenciesButtons'>
-					<button id='rub' className={activeButton === 'rub' ? 'button active' : 'button'} onClick={changeHandler}>RUB</button>
-					<button id='usd' className={activeButton === 'usd' ? 'button active' : 'button'} onClick={changeHandler}>USD</button>
-					<button id='eur' className={activeButton === 'eur' ? 'button active' : 'button'} onClick={changeHandler}>EUR</button>
+					<button id='rub' className={currency === 'rub' ? 'button active' : 'button'} onClick={changeHandler}>RUB</button>
+					<button id='usd' className={currency === 'usd' ? 'button active' : 'button'} onClick={changeHandler}>USD</button>
+					<button id='eur' className={currency === 'eur' ? 'button active' : 'button'} onClick={changeHandler}>EUR</button>
 				</div>
 			</div>
 			<div className='filter_check'>
@@ -83,7 +76,7 @@ function Filter({setCurrensy, tickets}) {
           value="end"
           control={<Checkbox 
 							id='all'
-							checked={defaultCheck.checkboxAll}
+							checked={isAllChecked}
 							name="checkboxAll"
 							value='all'
 							onChange={checkedFilterAll}						
@@ -95,7 +88,7 @@ function Filter({setCurrensy, tickets}) {
           value="end"
           control={<Checkbox 
 							id='none'
-							checked={defaultCheck.checkbox0}
+							checked={transferFilter[0]}
 							name="checkbox0"
 							value='0'
 							onChange={checkedFilter}
@@ -107,7 +100,7 @@ function Filter({setCurrensy, tickets}) {
           value="end"
           control={<Checkbox 
 							id='one'
-							checked={defaultCheck.checkbox1}
+							checked={transferFilter[1]}
 							name="checkbox1"
 							value='1'
 							onChange={checkedFilter}
@@ -119,7 +112,7 @@ function Filter({setCurrensy, tickets}) {
           value="end"
           control={<Checkbox 
 							id='two'
-							checked={defaultCheck.checkbox2}
+							checked={transferFilter[2]}
 							name="checkbox2"
 							value='2'
 							onChange={checkedFilter}				
@@ -131,7 +124,7 @@ function Filter({setCurrensy, tickets}) {
           value="end"
           control = {<Checkbox 
 							id='three'
-							checked={defaultCheck.checkbox3}
+							checked={transferFilter[3]}
 							name="checkbox3"
 							value='3'
 							onChange={checkedFilter}							
