@@ -33,4 +33,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 - Использование библиотеки Axios для создания запросов на сервер
 - Использование кастомных хуков
 
-
