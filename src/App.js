@@ -21,7 +21,6 @@ function App() {
     })
     
   }, [tickets, transferFilter])
-  console.log(transferFilter)
 
   const [fetchTickets, isTicketLoading, ticketError] = useFetching (async () => {
     const tickets = await TicketService.getAll();
