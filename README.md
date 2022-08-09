@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Checkout the project 
  
 ```
-git clone https://github.com/KorzhowVD/ToDoApp.git
+git clone https://github.com/KorzhowVD/test-app.git
 ```
  
 - Navigate to project in the terminal 
@@ -32,5 +32,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 - Работоспособность в десктопных браузерах (IE11, Chrome) (добавлены [react-app-polyfill](https://github.com/facebook/create-react-app/blob/main/packages/react-app-polyfill/README.md) и [core-js](https://github.com/zloirock/core-js#ecmascript-object))
 - Использование библиотеки Axios для создания запросов на сервер
 - Использование кастомных хуков
-
 
