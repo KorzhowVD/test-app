@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Checkout the project 
  
 ```
-git clone https://github.com/KorzhowVD/ToDoApp.git
+git clone https://github.com/KorzhowVD/test-app.git
 ```
  
 - Navigate to project in the terminal 
