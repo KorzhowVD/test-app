@@ -27,6 +27,8 @@ function App() {
     setTickets(tickets)
   })
 
+  
+
   useEffect(() => {
       fetchTickets()
   }, [])
@@ -46,7 +48,9 @@ function App() {
       }
       {isTicketLoading 
         ? <div className="preloader_container"><Preloader/></div>
-        : <TicketList tickets={filterTickets} currency={currency}/>
+        : (Object.values(transferFilter).every(v => v === false)
+          ? <Alert className="emptyTicketList" severity="info">Список билетов пуст. Выберите один из фильтров</Alert>
+          : <TicketList tickets={filterTickets} currency={currency}/>) 
       }
       </div>
     </div>
